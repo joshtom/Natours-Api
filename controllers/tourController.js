@@ -1,7 +1,7 @@
 const fs = require('fs');
 
 const tours = JSON.parse(
-  fs.readFileSync(`${__dirname}/dev-data/data/tours-simple.json`)
+  fs.readFileSync(`${__dirname}/../dev-data/data/tours-simple.json`)
 );
 
 /**
@@ -13,7 +13,8 @@ const tours = JSON.parse(
  */
 exports.checkID = (req, res, next, val) => {
   if (req.params.id * 1 > tours.length) {
-    res.status(404).json({
+    // Add return inorder to avoid it setting the header twice
+    return res.status(404).json({
       status: 'fail',
       message: 'Id Not found'
     });
@@ -60,7 +61,7 @@ exports.createTour = (req, res) => {
   tours.push(newTour);
 
   fs.writeFile(
-    `${__dirname}/dev-data/data/tours-simple.json`,
+    `${__dirname}/../dev-data/data/tours-simple.json`,
     JSON.stringify(tours),
     err => {
       res.status(201).json({
