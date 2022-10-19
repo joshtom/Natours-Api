@@ -83,6 +83,15 @@ const tourSchema = new mongoose.Schema(
   }
 );
 
+/**
+ * VIRTUAL PROPERTIES
+ * Virtuals are document properties that do not persist or get stored in the MongoDB database, they only exist logically and are not written to the document's collection.
+ */
+
+tourSchema.virtual('durationWeeks').get(function() {
+  return this.duration / 7;
+});
+
 const Tour = mongoose.model('Tour', tourSchema);
 
 module.exports = Tour;
